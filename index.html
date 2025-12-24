@@ -401,6 +401,25 @@
             ctx.fillText(text, x, y);
         }
 
+        // 绘制镜像文字（Y轴翻转）- 以图片中心为轴翻转
+        function drawMirroredText(ctx, text, x, y, fontSize = 40, color = '#FFFFFF', fontFamily = 'Arial', textAlign = 'center', fontWeight = 'normal', imageHeight = 3000) {
+            ctx.save(); // 保存当前状态
+            ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+            ctx.fillStyle = color;
+            ctx.textAlign = textAlign;
+            ctx.textBaseline = 'top';
+            
+            // 以图片中心为轴进行Y轴翻转
+            const centerY = imageHeight / 2;
+            ctx.translate(0, centerY);
+            ctx.scale(1, -1);
+            ctx.translate(0, -centerY);
+            
+            // 绘制文字（使用原始Y坐标，但会被翻转）
+            ctx.fillText(text, x, y);
+            ctx.restore(); // 恢复状态
+        }
+
         // 处理单行数据，生成一张图片
         async function processSingleRow(rowData, rowIndex, imageWidth, imageHeight) {
             // rowData 是 [姓名, 岗位/职位名称, 英文职位名称]
@@ -412,19 +431,19 @@
             // ========== 坐标配置区域 - 根据实际效果调整这些值 ==========
             // 姓名位置（可以根据图片模板调整）
             const nameX = 1380;                 // 水平坐标（像素）
-            const nameY = 550;                 // 垂直坐标（像素）
+            const nameY = 2040;                 // 垂直坐标（像素）
             const nameFontSize = 330;           // 字体大小
             const nameColor = '#000000';       // 文字颜色
             
             // 岗位/职位名称位置
             const positionX = 450;            // 水平坐标（像素）
-            const positionY = 666;             // 垂直坐标（像素）
+            const positionY = 2156;             // 垂直坐标（像素）
             const positionFontSize = 90;       // 字体大小
             const positionColor = '#000000';   // 文字颜色
             
             // 英文职位名称位置
             const engPositionX = 450;         // 水平坐标（像素）
-            const engPositionY = 780;           // 垂直坐标（像素）
+            const engPositionY = 2270;           // 垂直坐标（像素）
             const engPositionFontSize = 40;    // 字体大小
             const engPositionColor = '#000000'; // 文字颜色
             
@@ -432,14 +451,17 @@
             const textAlign = 'center';
             // ============================================================
             
-            // 绘制姓名
+            // 绘制姓名（正常 + 镜像）
             drawText(ctx, name || '', nameX, nameY, nameFontSize, nameColor, 'Arial', textAlign);
+            drawMirroredText(ctx, name || '', nameX, nameY, nameFontSize, nameColor, 'Arial', textAlign, 'normal', height);
             
-            // 绘制岗位/职位名称
+            // 绘制岗位/职位名称（正常 + 镜像）
             drawText(ctx, position || '', positionX, positionY, positionFontSize, positionColor, 'Arial', textAlign);
+            drawMirroredText(ctx, position || '', positionX, positionY, positionFontSize, positionColor, 'Arial', textAlign, 'normal', height);
             
-            // 绘制英文职位名称（使用细体字体和细体粗细）
+            // 绘制英文职位名称（正常 + 镜像，使用细体字体和细体粗细）
             drawText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, engPositionColor, 'Helvetica Neue', textAlign, '300');
+            drawMirroredText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, engPositionColor, 'Helvetica Neue', textAlign, '300', height);
             
             // 转换为Blob
             return new Promise(resolve => {
