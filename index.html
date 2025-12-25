@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>晚宴桌牌制作</title>
+    <title>桌牌制作 - 网页版</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -11,7 +11,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, #F5E8E8 0%, #F0E0E0 100%);
+            background: linear-gradient(135deg, #faf8f5 0%, #f0e6d2 100%);
             min-height: 100vh; padding: 20px;
         }
         .container {
@@ -21,64 +21,49 @@
             min-height: calc(100vh - 40px);
         }
         .header {
-            background: linear-gradient(135deg, #5c0100 0%, #ac1828 100%);
-            color: #ffc57f; padding: 30px; text-align: center;
+            background: linear-gradient(135deg, #D2B48C 0%, #DEB887 100%);
+            color: white; padding: 30px; text-align: center;
         }
-        .header h1 { 
-            font-size: 32px; 
-            font-weight: 600; 
-            margin-bottom: 10px;
-            text-shadow: -3px 3px 8px rgba(0, 0, 0, 0.5); /* 左下角投影，可调整模糊程度 */
-        }
+        .header h1 { font-size: 32px; font-weight: 600; margin-bottom: 10px; }
         .main-content { flex: 1; padding: 40px; }
         .upload-section {
             background: #f8f9fa; border-radius: 12px; padding: 30px;
             margin-bottom: 30px; border: 2px dashed #cbd5e0;
             transition: all 0.3s;
         }
-        .upload-section:hover { border-color: #ac1828; background: #f7fafc; }
+        .upload-section:hover { border-color: #D2B48C; background: #f7fafc; }
         .folder-upload {
             text-align: center; margin-bottom: 30px;
         }
         .folder-upload-button {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 20px 40px; background: linear-gradient(135deg, #5c0100 0%, #ac1828 100%); color: #ffc57f;
+            padding: 20px 40px; background: #D2B48C; color: white;
             border: none; border-radius: 8px; cursor: pointer;
             transition: all 0.3s; font-size: 18px; font-weight: 500;
-            text-shadow: -3px 3px 8px rgba(0, 0, 0, 0.5); /* 左下角投影，可调整模糊程度 */
         }
-        .folder-upload-button:hover { background: linear-gradient(135deg, #6c0110 0%, #bc2838 100%); transform: translateY(-2px); }
+        .folder-upload-button:hover { background: #DEB887; transform: translateY(-2px); }
         .file-mapping {
             display: none; margin-top: 20px;
         }
-        .file-mapping h3 { 
-            color: #000000; 
-            margin-bottom: 15px; 
-            font-size: 1.5em;
-            font-weight: 600;
-        }
+        .file-mapping h3 { color: #2d3748; margin-bottom: 15px; }
         .file-mapping-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;
         }
         .mapping-item {
-            background: linear-gradient(135deg, #5c0100 0%, #ac1828 100%); padding: 15px; border-radius: 8px;
-            border: 1px solid #ac1828; display: flex;
+            background: #f8f9fa; padding: 15px; border-radius: 8px;
+            border: 1px solid #e2e8f0; display: flex;
             justify-content: space-between; align-items: center;
         }
-        .mapping-item.found { border-color: #ac1828; }
+        .mapping-item.found { border-color: #48bb78; }
         .mapping-item.missing { border-color: #f56565; }
         .mapping-info { flex: 1; }
-        .mapping-title { font-weight: 600; color: #ffc57f; margin-bottom: 5px; text-shadow: -3px 3px 8px rgba(0, 0, 0, 0.5); }
-        .mapping-filename { font-size: 12px; color: #ffc57f; text-shadow: -2px 2px 6px rgba(0, 0, 0, 0.5); }
+        .mapping-title { font-weight: 600; color: #2d3748; margin-bottom: 5px; }
+        .mapping-filename { font-size: 12px; color: #666; }
         .mapping-status {
             padding: 4px 8px; border-radius: 4px; font-size: 12px;
             font-weight: 500;
         }
-        .mapping-status.found { 
-            background: linear-gradient(135deg, #5c0100 0%, #ac1828 100%); 
-            color: #ffc57f; 
-            text-shadow: -2px 2px 6px rgba(0, 0, 0, 0.5);
-        }
+        .mapping-status.found { background: #48bb78; color: white; }
         .mapping-status.missing { background: #f56565; color: white; }
         .date-input-section {
             background: #f8f9fa; border-radius: 12px; padding: 30px;
@@ -93,9 +78,8 @@
         .date-input { 
             padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px;
             font-size: 14px; transition: border-color 0.3s;
-            color: #D4AF37; /* 金色 */
         }
-        .date-input:focus { outline: none; border-color: #ac1828; }
+        .date-input:focus { outline: none; border-color: #D2B48C; }
         .process-section { text-align: center; margin: 40px 0; }
         .btn {
             padding: 15px 30px; border: none; border-radius: 8px;
@@ -104,19 +88,8 @@
             gap: 10px; margin: 0 10px;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .btn-primary { 
-            background: linear-gradient(135deg, #5c0100 0%, #ac1828 100%); 
-            color: #ffc57f; 
-            text-shadow: -3px 3px 8px rgba(0, 0, 0, 0.5); /* 左下角投影，可调整模糊程度 */
-        }
-        .btn-success { 
-            background: linear-gradient(135deg, #5c0100 0%, #ac1828 100%); 
-            color: #ffc57f; 
-            text-shadow: -3px 3px 8px rgba(0, 0, 0, 0.5); /* 左下角投影，可调整模糊程度 */
-        }
-        .btn-success:hover {
-            background: linear-gradient(135deg, #6c0110 0%, #bc2838 100%);
-        }
+        .btn-primary { background: #D2B48C; color: white; }
+        .btn-success { background: #48bb78; color: white; }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .progress-section { margin: 30px 0; display: none; }
         .progress-bar {
@@ -124,45 +97,24 @@
             border-radius: 10px; overflow: hidden; margin-bottom: 10px;
         }
         .progress-fill {
-            height: 100%; background: linear-gradient(90deg, #5c0100, #ac1828);
+            height: 100%; background: linear-gradient(90deg, #D2B48C, #DEB887);
             width: 0%; transition: width 0.3s;
         }
         .progress-text { text-align: center; color: #666; font-size: 14px; }
         .results-section { margin-top: 30px; display: none; }
-        .results-section h3 { 
-            color: #000000; 
-            margin-bottom: 20px; 
-            font-size: 1.5em;
-            font-weight: 600;
-        }
+        .results-section h3 { color: #2d3748; margin-bottom: 20px; }
         .download-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
         .download-item {
-            background: linear-gradient(135deg, #5c0100 0%, #ac1828 100%); padding: 15px; border-radius: 8px;
-            border: 1px solid #ac1828; display: flex;
+            background: #f8f9fa; padding: 15px; border-radius: 8px;
+            border: 1px solid #e2e8f0; display: flex;
             justify-content: space-between; align-items: center;
         }
-        .file-info { flex: 1; }
-        .file-name { 
-            color: #ffc57f; 
-            font-weight: 500; 
-            margin-bottom: 5px;
-            text-shadow: -2px 2px 6px rgba(0, 0, 0, 0.5);
-        }
-        .file-size { 
-            color: #ffc57f; 
-            font-size: 12px;
-            text-shadow: -2px 2px 6px rgba(0, 0, 0, 0.5);
-        }
         .download-btn {
-            padding: 8px 16px; background: linear-gradient(135deg, #5c0100 0%, #ac1828 100%); color: #ffc57f;
+            padding: 8px 16px; background: #48bb78; color: white;
             border: none; border-radius: 6px; cursor: pointer;
-            font-size: 12px; transition: all 0.3s;
-            text-shadow: -2px 2px 6px rgba(0, 0, 0, 0.5);
+            font-size: 12px; transition: background 0.3s;
         }
-        .download-btn:hover { 
-            background: linear-gradient(135deg, #6c0110 0%, #bc2838 100%); 
-            transform: translateY(-1px);
-        }
+        .download-btn:hover { background: #38a169; }
         .log-section { margin-top: 30px; display: none; }
         .log-container {
             background: #1a202c; color: #e2e8f0; padding: 20px;
@@ -178,7 +130,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>晚宴桌牌制作</h1>
+            <h1>📊 桌牌制作</h1>
         </div>
         <div class="main-content">
             <!-- 文件夹上传区域 -->
@@ -449,123 +401,21 @@
             ctx.fillText(text, x, y);
         }
 
-        // 绘制镜像文字（水平轴翻转 + 垂直轴翻转）- 以图片中心为轴翻转
-        function drawMirroredText(ctx, text, x, y, fontSize = 40, color = '#FFFFFF', fontFamily = 'Arial', textAlign = 'center', fontWeight = 'normal', imageWidth = 2000, imageHeight = 3000) {
+        // 绘制镜像文字（Y轴翻转）- 以图片中心为轴翻转
+        function drawMirroredText(ctx, text, x, y, fontSize = 40, color = '#FFFFFF', fontFamily = 'Arial', textAlign = 'center', fontWeight = 'normal', imageHeight = 3000) {
             ctx.save(); // 保存当前状态
             ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
             ctx.fillStyle = color;
             ctx.textAlign = textAlign;
             ctx.textBaseline = 'top';
             
-            // 第一步：以图片中心水平轴为轴进行上下翻转
+            // 以图片中心为轴进行Y轴翻转
             const centerY = imageHeight / 2;
             ctx.translate(0, centerY);
             ctx.scale(1, -1);
             ctx.translate(0, -centerY);
             
-            // 第二步：以图片中心垂直轴为轴进行左右翻转
-            const centerX = imageWidth / 2;
-            ctx.translate(centerX, 0);
-            ctx.scale(-1, 1);
-            ctx.translate(-centerX, 0);
-            
-            // 绘制文字（使用原始坐标，但会被翻转）
-            ctx.fillText(text, x, y);
-            ctx.restore(); // 恢复状态
-        }
-
-        // 绘制渐变文字到画布（从右往左渐变：右边#ffebcb，左边#ffc986）
-        function drawGradientText(ctx, text, x, y, fontSize = 40, fontFamily = 'Arial', textAlign = 'center', fontWeight = 'normal', leftColor = '#ffc986', rightColor = '#ffebcb', shadowOffsetX = 0, shadowOffsetY = 0, shadowBlur = 0, shadowColor = 'rgba(0, 0, 0, 0.5)') {
-            if (!text) return;
-            
-            ctx.save();
-            ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-            ctx.textAlign = textAlign;
-            ctx.textBaseline = 'top';
-            
-            // 设置投影
-            ctx.shadowOffsetX = shadowOffsetX;  // 水平偏移（负值向左）
-            ctx.shadowOffsetY = shadowOffsetY;  // 垂直偏移（正值向下）
-            ctx.shadowBlur = shadowBlur;        // 模糊程度
-            ctx.shadowColor = shadowColor;      // 投影颜色
-            
-            // 测量文字宽度
-            const textWidth = ctx.measureText(text).width;
-            
-            // 根据对齐方式计算渐变起始位置
-            let gradientStartX, gradientEndX;
-            if (textAlign === 'center') {
-                gradientStartX = x - textWidth / 2;
-                gradientEndX = x + textWidth / 2;
-            } else if (textAlign === 'right') {
-                gradientStartX = x - textWidth;
-                gradientEndX = x;
-            } else { // left
-                gradientStartX = x;
-                gradientEndX = x + textWidth;
-            }
-            
-            // 创建渐变（从左到右：左边#ffc986，右边#ffebcb）
-            const gradient = ctx.createLinearGradient(gradientStartX, y, gradientEndX, y);
-            gradient.addColorStop(0, leftColor);   // 左边（起始）
-            gradient.addColorStop(1, rightColor);  // 右边（结束）
-            
-            ctx.fillStyle = gradient;
-            ctx.fillText(text, x, y);
-            ctx.restore();
-        }
-
-        // 绘制镜像渐变文字（水平轴翻转 + 垂直轴翻转）- 以图片中心为轴翻转
-        function drawMirroredGradientText(ctx, text, x, y, fontSize = 40, fontFamily = 'Arial', textAlign = 'center', fontWeight = 'normal', imageWidth = 2000, imageHeight = 3000, leftColor = '#ffc986', rightColor = '#ffebcb', shadowOffsetX = 0, shadowOffsetY = 0, shadowBlur = 0, shadowColor = 'rgba(0, 0, 0, 0.5)') {
-            if (!text) return;
-            
-            ctx.save(); // 保存当前状态
-            ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-            ctx.textAlign = textAlign;
-            ctx.textBaseline = 'top';
-            
-            // 设置投影
-            ctx.shadowOffsetX = shadowOffsetX;  // 水平偏移（负值向左）
-            ctx.shadowOffsetY = shadowOffsetY;  // 垂直偏移（正值向下）
-            ctx.shadowBlur = shadowBlur;        // 模糊程度
-            ctx.shadowColor = shadowColor;      // 投影颜色
-            
-            // 测量文字宽度
-            const textWidth = ctx.measureText(text).width;
-            
-            // 根据对齐方式计算渐变起始位置
-            let gradientStartX, gradientEndX;
-            if (textAlign === 'center') {
-                gradientStartX = x - textWidth / 2;
-                gradientEndX = x + textWidth / 2;
-            } else if (textAlign === 'right') {
-                gradientStartX = x - textWidth;
-                gradientEndX = x;
-            } else { // left
-                gradientStartX = x;
-                gradientEndX = x + textWidth;
-            }
-            
-            // 创建渐变（从左到右：左边#ffc986，右边#ffebcb）
-            const gradient = ctx.createLinearGradient(gradientStartX, y, gradientEndX, y);
-            gradient.addColorStop(0, leftColor);   // 左边（起始）
-            gradient.addColorStop(1, rightColor);  // 右边（结束）
-            
-            ctx.fillStyle = gradient;
-            
-            // 第一步：以图片中心水平轴为轴进行上下翻转
-            const centerY = imageHeight / 2;
-            ctx.translate(0, centerY);
-            ctx.scale(1, -1);
-            ctx.translate(0, -centerY);
-            
-            // 第二步：以图片中心垂直轴为轴进行左右翻转
-            const centerX = imageWidth / 2;
-            ctx.translate(centerX, 0);
-            ctx.scale(-1, 1);
-            ctx.translate(-centerX, 0);
-            
-            // 绘制文字（使用原始坐标，但会被翻转）
+            // 绘制文字（使用原始Y坐标，但会被翻转）
             ctx.fillText(text, x, y);
             ctx.restore(); // 恢复状态
         }
@@ -580,47 +430,38 @@
             
             // ========== 坐标配置区域 - 根据实际效果调整这些值 ==========
             // 姓名位置（可以根据图片模板调整）
-            const nameX = 1150;                 // 水平坐标（像素）
+            const nameX = 1380;                 // 水平坐标（像素）
             const nameY = 2040;                 // 垂直坐标（像素）
             const nameFontSize = 330;           // 字体大小
-            const nameColor = '#ffc57f';       // 文字颜色
+            const nameColor = '#000000';       // 文字颜色
             
             // 岗位/职位名称位置
-            const positionX = 1150;            // 水平坐标（像素）
-            const positionY = 1796;             // 垂直坐标（像素）
+            const positionX = 450;            // 水平坐标（像素）
+            const positionY = 2156;             // 垂直坐标（像素）
             const positionFontSize = 90;       // 字体大小
-            const positionColor = '#ffc57f';   // 文字颜色
+            const positionColor = '#000000';   // 文字颜色
             
             // 英文职位名称位置
-            const engPositionX = 1150;         // 水平坐标（像素）
-            const engPositionY = 1910;           // 垂直坐标（像素）
+            const engPositionX = 450;         // 水平坐标（像素）
+            const engPositionY = 2270;           // 垂直坐标（像素）
             const engPositionFontSize = 40;    // 字体大小
-            const engPositionColor = '#ffc57f'; // 文字颜色
+            const engPositionColor = '#000000'; // 文字颜色
             
             // 文字对齐方式：'left'（左对齐）、'center'（居中）、'right'（右对齐）
             const textAlign = 'center';
-            // 渐变色配置（从右往左：右边#ffebcb，左边#ffc986）
-            const gradientLeftColor = '#ffc986';   // 左边颜色
-            const gradientRightColor = '#ffebcb';  // 右边颜色
-            
-            // 投影配置（左下方投影）
-            const shadowOffsetX = -40;        // 水平偏移（负值向左，单位：像素）
-            const shadowOffsetY = 40;        // 垂直偏移（正值向下，单位：像素）
-            const shadowBlur = 50;             // 模糊程度（数值越大越模糊，单位：像素）
-            const shadowColor = 'rgba(0, 0, 0, 0.5)'; // 投影颜色（黑色半透明）
             // ============================================================
             
-            // 绘制姓名（正常 + 镜像，使用渐变）
-            drawGradientText(ctx, name || '', nameX, nameY, nameFontSize, 'Arial', textAlign, 'normal', gradientLeftColor, gradientRightColor, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor);
-            drawMirroredGradientText(ctx, name || '', nameX, nameY, nameFontSize, 'Arial', textAlign, 'normal', width, height, gradientLeftColor, gradientRightColor, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor);
+            // 绘制姓名（正常 + 镜像）
+            drawText(ctx, name || '', nameX, nameY, nameFontSize, nameColor, 'Arial', textAlign);
+            drawMirroredText(ctx, name || '', nameX, nameY, nameFontSize, nameColor, 'Arial', textAlign, 'normal', height);
             
-            // 绘制岗位/职位名称（正常 + 镜像，使用渐变）
-            drawGradientText(ctx, position || '', positionX, positionY, positionFontSize, 'Arial', textAlign, 'normal', gradientLeftColor, gradientRightColor, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor);
-            drawMirroredGradientText(ctx, position || '', positionX, positionY, positionFontSize, 'Arial', textAlign, 'normal', width, height, gradientLeftColor, gradientRightColor, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor);
+            // 绘制岗位/职位名称（正常 + 镜像）
+            drawText(ctx, position || '', positionX, positionY, positionFontSize, positionColor, 'Arial', textAlign);
+            drawMirroredText(ctx, position || '', positionX, positionY, positionFontSize, positionColor, 'Arial', textAlign, 'normal', height);
             
-            // 绘制英文职位名称（正常 + 镜像，使用细体字体和细体粗细，使用渐变）
-            drawGradientText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, 'Helvetica Neue', textAlign, '300', gradientLeftColor, gradientRightColor, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor);
-            drawMirroredGradientText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, 'Helvetica Neue', textAlign, '300', width, height, gradientLeftColor, gradientRightColor, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor);
+            // 绘制英文职位名称（正常 + 镜像，使用细体字体和细体粗细）
+            drawText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, engPositionColor, 'Helvetica Neue', textAlign, '300');
+            drawMirroredText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, engPositionColor, 'Helvetica Neue', textAlign, '300', height);
             
             // 转换为Blob
             return new Promise(resolve => {
