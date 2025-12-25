@@ -13,6 +13,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             background: linear-gradient(135deg, #faf8f5 0%, #f0e6d2 100%);
             min-height: 100vh; padding: 20px;
+            text-shadow: -2px 3px 10px rgba(0, 0, 0, 0.25);
         }
         .container {
             max-width: 1200px; margin: 0 auto; background: white;
@@ -21,8 +22,9 @@
             min-height: calc(100vh - 40px);
         }
         .header {
-            background: linear-gradient(135deg, #D2B48C 0%, #DEB887 100%);
+            background: linear-gradient(90deg, #ef8690 0%, #ecc9cc 100%);
             color: white; padding: 30px; text-align: center;
+            text-shadow: -2px 3px 12px rgba(0, 0, 0, 0.4);
         }
         .header h1 { font-size: 32px; font-weight: 600; margin-bottom: 10px; }
         .main-content { flex: 1; padding: 40px; }
@@ -31,21 +33,23 @@
             margin-bottom: 30px; border: 2px dashed #cbd5e0;
             transition: all 0.3s;
         }
-        .upload-section:hover { border-color: #D2B48C; background: #f7fafc; }
+        .upload-section:hover { border-color: #ef8690; background: #f7fafc; }
+        .upload-section h2 { text-shadow: none; }
         .folder-upload {
             text-align: center; margin-bottom: 30px;
         }
         .folder-upload-button {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 20px 40px; background: #D2B48C; color: white;
+            padding: 20px 40px; background: #e29298; color: white;
             border: none; border-radius: 8px; cursor: pointer;
             transition: all 0.3s; font-size: 18px; font-weight: 500;
+            text-shadow: -2px 3px 12px rgba(0, 0, 0, 0.4);
         }
-        .folder-upload-button:hover { background: #DEB887; transform: translateY(-2px); }
+        .folder-upload-button:hover { background: #e29298; transform: translateY(-2px); opacity: 0.9; }
         .file-mapping {
             display: none; margin-top: 20px;
         }
-        .file-mapping h3 { color: #2d3748; margin-bottom: 15px; }
+        .file-mapping h3 { color: #2d3748; margin-bottom: 15px; text-shadow: none; }
         .file-mapping-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;
         }
@@ -54,17 +58,17 @@
             border: 1px solid #e2e8f0; display: flex;
             justify-content: space-between; align-items: center;
         }
-        .mapping-item.found { border-color: #48bb78; }
+        .mapping-item.found { border-color: #e29298; }
         .mapping-item.missing { border-color: #f56565; }
         .mapping-info { flex: 1; }
-        .mapping-title { font-weight: 600; color: #2d3748; margin-bottom: 5px; }
-        .mapping-filename { font-size: 12px; color: #666; }
+        .mapping-title { font-weight: 600; color: #2d3748; margin-bottom: 5px; text-shadow: none; }
+        .mapping-filename { font-size: 12px; color: #666; text-shadow: none; }
         .mapping-status {
             padding: 4px 8px; border-radius: 4px; font-size: 12px;
             font-weight: 500;
         }
-        .mapping-status.found { background: #48bb78; color: white; }
-        .mapping-status.missing { background: #f56565; color: white; }
+        .mapping-status.found { background: #e29298; color: white; text-shadow: -1px 2px 8px rgba(0, 0, 0, 0.4); }
+        .mapping-status.missing { background: #f56565; color: white; text-shadow: -1px 2px 8px rgba(0, 0, 0, 0.4); }
         .date-input-section {
             background: #f8f9fa; border-radius: 12px; padding: 30px;
             margin-bottom: 30px; border: 2px solid #e2e8f0;
@@ -78,8 +82,9 @@
         .date-input { 
             padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px;
             font-size: 14px; transition: border-color 0.3s;
+            text-shadow: none;
         }
-        .date-input:focus { outline: none; border-color: #D2B48C; }
+        .date-input:focus { outline: none; border-color: #ef8690; }
         .process-section { text-align: center; margin: 40px 0; }
         .btn {
             padding: 15px 30px; border: none; border-radius: 8px;
@@ -88,8 +93,8 @@
             gap: 10px; margin: 0 10px;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .btn-primary { background: #D2B48C; color: white; }
-        .btn-success { background: #48bb78; color: white; }
+        .btn-primary { background: #e29298; color: white; text-shadow: -2px 3px 12px rgba(0, 0, 0, 0.4); }
+        .btn-success { background: #e29298; color: white; text-shadow: -2px 3px 12px rgba(0, 0, 0, 0.4); }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .progress-section { margin: 30px 0; display: none; }
         .progress-bar {
@@ -97,7 +102,7 @@
             border-radius: 10px; overflow: hidden; margin-bottom: 10px;
         }
         .progress-fill {
-            height: 100%; background: linear-gradient(90deg, #D2B48C, #DEB887);
+            height: 100%; background: linear-gradient(90deg, #ef8690, #ecc9cc);
             width: 0%; transition: width 0.3s;
         }
         .progress-text { text-align: center; color: #666; font-size: 14px; }
@@ -109,17 +114,21 @@
             border: 1px solid #e2e8f0; display: flex;
             justify-content: space-between; align-items: center;
         }
+        .file-name { text-shadow: none; }
         .download-btn {
-            padding: 8px 16px; background: #48bb78; color: white;
+            padding: 8px 16px; background: #e29298; color: white;
             border: none; border-radius: 6px; cursor: pointer;
-            font-size: 12px; transition: background 0.3s;
+            font-size: 12px; transition: all 0.3s;
+            text-shadow: -1px 2px 8px rgba(0, 0, 0, 0.4);
         }
-        .download-btn:hover { background: #38a169; }
+        .download-btn:hover { background: #e29298; opacity: 0.9; }
         .log-section { margin-top: 30px; display: none; }
+        .log-section h3 { text-shadow: none; }
         .log-container {
             background: #1a202c; color: #e2e8f0; padding: 20px;
             border-radius: 8px; font-family: 'Courier New', monospace;
             font-size: 13px; line-height: 1.5; max-height: 300px; overflow-y: auto;
+            text-shadow: -1px 2px 8px rgba(0, 0, 0, 0.5);
         }
         .log-entry { margin-bottom: 5px; }
         .log-entry.success { color: #48bb78; }
@@ -130,7 +139,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 桌牌制作</h1>
+            <h1>桌牌制作</h1>
         </div>
         <div class="main-content">
             <!-- 文件夹上传区域 -->
@@ -401,21 +410,26 @@
             ctx.fillText(text, x, y);
         }
 
-        // 绘制镜像文字（Y轴翻转）- 以图片中心为轴翻转
-        function drawMirroredText(ctx, text, x, y, fontSize = 40, color = '#FFFFFF', fontFamily = 'Arial', textAlign = 'center', fontWeight = 'normal', imageHeight = 3000) {
+        // 绘制镜像文字（Y轴翻转 + X轴翻转）- 以图片中心为轴翻转
+        function drawMirroredText(ctx, text, x, y, fontSize = 40, color = '#FFFFFF', fontFamily = 'Arial', textAlign = 'center', fontWeight = 'normal', imageWidth = 3000, imageHeight = 3000) {
             ctx.save(); // 保存当前状态
             ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
             ctx.fillStyle = color;
             ctx.textAlign = textAlign;
             ctx.textBaseline = 'top';
             
-            // 以图片中心为轴进行Y轴翻转
+            // 以图片中心为轴进行Y轴翻转和X轴翻转
+            const centerX = imageWidth / 2;
             const centerY = imageHeight / 2;
-            ctx.translate(0, centerY);
-            ctx.scale(1, -1);
-            ctx.translate(0, -centerY);
             
-            // 绘制文字（使用原始Y坐标，但会被翻转）
+            // 先平移到图片中心
+            ctx.translate(centerX, centerY);
+            // 同时进行X轴和Y轴翻转（scale(-1, -1)）
+            ctx.scale(-1, -1);
+            // 平移回原坐标系
+            ctx.translate(-centerX, -centerY);
+            
+            // 绘制文字（使用原始坐标，但会被翻转）
             ctx.fillText(text, x, y);
             ctx.restore(); // 恢复状态
         }
@@ -453,15 +467,15 @@
             
             // 绘制姓名（正常 + 镜像）
             drawText(ctx, name || '', nameX, nameY, nameFontSize, nameColor, 'Arial', textAlign);
-            drawMirroredText(ctx, name || '', nameX, nameY, nameFontSize, nameColor, 'Arial', textAlign, 'normal', height);
+            drawMirroredText(ctx, name || '', nameX, nameY, nameFontSize, nameColor, 'Arial', textAlign, 'normal', width, height);
             
             // 绘制岗位/职位名称（正常 + 镜像）
             drawText(ctx, position || '', positionX, positionY, positionFontSize, positionColor, 'Arial', textAlign);
-            drawMirroredText(ctx, position || '', positionX, positionY, positionFontSize, positionColor, 'Arial', textAlign, 'normal', height);
+            drawMirroredText(ctx, position || '', positionX, positionY, positionFontSize, positionColor, 'Arial', textAlign, 'normal', width, height);
             
             // 绘制英文职位名称（正常 + 镜像，使用细体字体和细体粗细）
             drawText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, engPositionColor, 'Helvetica Neue', textAlign, '300');
-            drawMirroredText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, engPositionColor, 'Helvetica Neue', textAlign, '300', height);
+            drawMirroredText(ctx, engPosition || '', engPositionX, engPositionY, engPositionFontSize, engPositionColor, 'Helvetica Neue', textAlign, '300', width, height);
             
             // 转换为Blob
             return new Promise(resolve => {
