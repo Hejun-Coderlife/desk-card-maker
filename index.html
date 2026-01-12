@@ -197,6 +197,25 @@
                 </div>
             </div>
 
+            <!-- 预览区域 -->
+            <div class="preview-section" id="previewSection" style="display: none; margin: 30px 0; background: #f8f9fa; padding: 30px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                <h3 style="margin-bottom: 20px; text-shadow: none;">预览输出效果</h3>
+                
+                <!-- 选择预览行 -->
+                <div style="margin-bottom: 20px; text-align: center;">
+                    <label style="margin-right: 10px; font-weight: 500; color: #4a5568;">预览第几行数据：</label>
+                    <input type="number" id="previewRowNum" value="1" min="1" style="padding: 8px 12px; width: 80px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px; margin-right: 10px; text-shadow: none;">
+                    <button class="btn btn-primary" onclick="showPreview()">生成预览</button>
+                </div>
+                
+                <!-- 预览图片显示 -->
+                <div style="text-align: center; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <img id="previewOutputImage" style="max-width: 100%; max-height: 600px; border: 2px solid #e2e8f0; border-radius: 8px; display: none; margin: 0 auto;">
+                    <div id="previewLoading" style="display: none; color: #666; padding: 20px; text-align: center;">正在生成预览...</div>
+                    <div id="previewPlaceholder" style="color: #999; padding: 40px; text-align: center;">点击"生成预览"按钮查看效果</div>
+                </div>
+            </div>
+
             <div class="process-section">
                 <button class="btn btn-primary" onclick="processData()" id="processBtn">🚀 开始处理</button>
                 <button class="btn btn-success" onclick="downloadAllAsZip()" id="downloadAllBtn" style="display: none;">📦 打包下载全部</button>
@@ -283,6 +302,17 @@
             // 检查是否所有必需文件都已上传
             if (uploadedFiles['excel'] && uploadedFiles['image']) {
                 log('✅ 所有必需文件已找到，可以开始处理', 'success');
+                // 自动显示预览区域
+                document.getElementById('previewSection').style.display = 'block';
+                // 延迟一下，确保界面更新完成后再自动预览
+                setTimeout(async () => {
+                    try {
+                        document.getElementById('previewRowNum').value = 1;
+                        await showPreview();
+                    } catch (error) {
+                        console.log('自动预览失败:', error);
+                    }
+                }, 500);
             } else {
                 const missing = [];
                 if (!uploadedFiles['excel']) missing.push('Excel表格');
@@ -346,6 +376,81 @@
         function hideProgress() {
             document.getElementById('progressSection').style.display = 'none';
             document.getElementById('processBtn').disabled = false;
+        }
+
+        // 预览输出图片的函数
+        async function showPreview() {
+            // 检查文件是否上传
+            if (!uploadedFiles['excel'] || !uploadedFiles['image']) {
+                alert('请先上传Excel和图片文件！');
+                return;
+            }
+            
+            const rowNum = parseInt(document.getElementById('previewRowNum').value);
+            const previewImg = document.getElementById('previewOutputImage');
+            const previewLoading = document.getElementById('previewLoading');
+            const previewPlaceholder = document.getElementById('previewPlaceholder');
+            const previewSection = document.getElementById('previewSection');
+            
+            // 显示加载状态
+            previewLoading.style.display = 'block';
+            previewImg.style.display = 'none';
+            previewPlaceholder.style.display = 'none';
+            previewSection.style.display = 'block';
+            
+            try {
+                // 读取Excel数据
+                const workbook = await readExcelFile(uploadedFiles['excel']);
+                const excelData = getSheetData(workbook);
+                
+                // 检查行号是否有效（跳过表头，所以从1开始）
+                if (rowNum < 1 || rowNum >= excelData.length) {
+                    alert(`行号无效！Excel共有 ${excelData.length - 1} 行数据（不含表头）`);
+                    previewLoading.style.display = 'none';
+                    previewPlaceholder.style.display = 'block';
+                    return;
+                }
+                
+                // 获取该行数据（跳过表头，所以是 rowNum）
+                const row = excelData[rowNum];
+                const rowData = [
+                    String(row[0] || '').trim(),
+                    String(row[1] || '').trim(),
+                    String(row[2] || '').trim()
+                ];
+                
+                // 检查是否有姓名
+                if (!rowData[0]) {
+                    alert('该行没有姓名数据！');
+                    previewLoading.style.display = 'none';
+                    previewPlaceholder.style.display = 'block';
+                    return;
+                }
+                
+                // 生成预览图片（使用现有的 processSingleRow 函数）
+                const { width, height } = await createImageCanvas(uploadedFiles['image']);
+                const imageBlob = await processSingleRow(rowData, rowNum, width, height);
+                
+                // 显示预览图片
+                // 如果之前有预览URL，先释放
+                if (previewImg.src && previewImg.src.startsWith('blob:')) {
+                    URL.revokeObjectURL(previewImg.src);
+                }
+                
+                const previewUrl = URL.createObjectURL(imageBlob);
+                previewImg.src = previewUrl;
+                previewImg.style.display = 'block';
+                previewLoading.style.display = 'none';
+                previewPlaceholder.style.display = 'none';
+                
+                log(`✅ 预览生成成功：${rowData[0]}`, 'success');
+                
+            } catch (error) {
+                log(`❌ 预览生成失败: ${error.message}`, 'error');
+                previewLoading.style.display = 'none';
+                previewPlaceholder.style.display = 'block';
+                alert('预览生成失败：' + error.message);
+            }
         }
 
         // 读取Excel文件
