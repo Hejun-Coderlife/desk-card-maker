@@ -13,7 +13,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             background: linear-gradient(135deg, #faf8f5 0%, #f0e6d2 100%);
             min-height: 100vh; padding: 20px;
-            text-shadow: -2px 3px 10px rgba(0, 0, 0, 0.25);
         }
         .container {
             max-width: 1200px; margin: 0 auto; background: white;
@@ -24,7 +23,6 @@
         .header {
             background: linear-gradient(90deg, #ef8690 0%, #ecc9cc 100%);
             color: white; padding: 30px; text-align: center;
-            text-shadow: -2px 3px 12px rgba(0, 0, 0, 0.4);
         }
         .header h1 { font-size: 32px; font-weight: 600; margin-bottom: 10px; }
         .main-content { flex: 1; padding: 40px; }
@@ -43,7 +41,6 @@
             padding: 20px 40px; background: #e29298; color: white;
             border: none; border-radius: 8px; cursor: pointer;
             transition: all 0.3s; font-size: 18px; font-weight: 500;
-            text-shadow: -2px 3px 12px rgba(0, 0, 0, 0.4);
         }
         .folder-upload-button:hover { background: #e29298; transform: translateY(-2px); opacity: 0.9; }
         .file-mapping {
@@ -67,8 +64,8 @@
             padding: 4px 8px; border-radius: 4px; font-size: 12px;
             font-weight: 500;
         }
-        .mapping-status.found { background: #e29298; color: white; text-shadow: -1px 2px 8px rgba(0, 0, 0, 0.4); }
-        .mapping-status.missing { background: #f56565; color: white; text-shadow: -1px 2px 8px rgba(0, 0, 0, 0.4); }
+        .mapping-status.found { background: #e29298; color: white; }
+        .mapping-status.missing { background: #f56565; color: white; }
         .date-input-section {
             background: #f8f9fa; border-radius: 12px; padding: 30px;
             margin-bottom: 30px; border: 2px solid #e2e8f0;
@@ -93,8 +90,8 @@
             gap: 10px; margin: 0 10px;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .btn-primary { background: #e29298; color: white; text-shadow: -2px 3px 12px rgba(0, 0, 0, 0.4); }
-        .btn-success { background: #e29298; color: white; text-shadow: -2px 3px 12px rgba(0, 0, 0, 0.4); }
+        .btn-primary { background: #e29298; color: white; }
+        .btn-success { background: #e29298; color: white; }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .progress-section { margin: 30px 0; display: none; }
         .progress-bar {
@@ -119,7 +116,6 @@
             padding: 8px 16px; background: #e29298; color: white;
             border: none; border-radius: 6px; cursor: pointer;
             font-size: 12px; transition: all 0.3s;
-            text-shadow: -1px 2px 8px rgba(0, 0, 0, 0.4);
         }
         .download-btn:hover { background: #e29298; opacity: 0.9; }
         .log-section { margin-top: 30px; display: none; }
@@ -128,7 +124,6 @@
             background: #1a202c; color: #e2e8f0; padding: 20px;
             border-radius: 8px; font-family: 'Courier New', monospace;
             font-size: 13px; line-height: 1.5; max-height: 300px; overflow-y: auto;
-            text-shadow: -1px 2px 8px rgba(0, 0, 0, 0.5);
         }
         .log-entry { margin-bottom: 5px; }
         .log-entry.success { color: #48bb78; }
@@ -152,6 +147,9 @@
                     </button>
                     <div style="margin-top: 15px; color: #666; font-size: 14px;">
                         请选择包含1个Excel表格和1张图片的文件夹
+                    </div>
+                    <div style="margin-top: 10px; color: #666; font-size: 14px;">
+                        表格共3列，列1:姓名；列2:岗位/职位名称；列3:英文职位名称
                     </div>
                 </div>
                 
